@@ -31,6 +31,27 @@ async function run() {
     const allProductCollection = client.db("tech12").collection("techProduct");
     const allUsersCollection = client.db("tech12").collection("users");
     const allAdminCollection = client.db("tech12").collection("adminar");
+    // Todo list website
+    const allTodoCollection = client.db("todo").collection("usersdata");
+
+    // Get all todo
+    // ===============================
+    app.get('/todo', async(req, res) =>{
+      const cursor = allTodoCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    //  add new todo list
+    // ===============================
+    app.post('/todo', async(req, res) =>{
+      const newTodo = req.body;
+      console.log(newTodo);
+      const result = await allTodoCollection.insertOne(newTodo);
+      res.send(result);
+    })
+
+
 
     app.get('/techProduct', async (req, res) => {
       const page = parseInt(req.query.page); // Use 'req.query' to access query parameters
